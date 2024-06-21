@@ -361,27 +361,23 @@ class Cart extends Component {
                         />
                     </div>
                     <div className="order-product">
-                        {products.map((p) => (
-                            <div
-                                onClick={() => this.addProductToCart(p.barcode)}
-                                key={p.id}
-                                className="item"
-                            >
-                                <img src={`/uploads/products/${p.image}`} alt={p.name} />
-
-                                <h5
-                                    style={
-                                        window.APP.warning_quantity >
-                                            p.quantity
-                                            ? { color: 'red' }
-                                            : {}
-                                    }
+                        {products
+                            .filter(p => p.status === 1) // Filter products where status equals 1
+                            .map(p => (
+                                <div
+                                    onClick={() => this.addProductToCart(p.barcode)}
+                                    key={p.id}
+                                    className="item"
                                 >
-                                    <span style={{fontWeight:'bold',color:"red"}}>{p.name}</span><br></br>Qty ({p.quantity})
-                                </h5>
-                            </div>
-                        ))}
+                                    <img src={`/uploads/products/${p.image}`} alt={p.name} />
+
+                                    <h5 style={window.APP.warning_quantity > p.quantity ? { color: 'red' } : {}}>
+                                        <span style={{ fontWeight: 'bold', color: 'red' }}>{p.name}</span><br></br>Qty ({p.quantity})
+                                    </h5>
+                                </div>
+                            ))}
                     </div>
+
                 </div>
                 <div style={{ display: 'none' }}>
                     <ReactToPrint
