@@ -26,11 +26,8 @@
       <!-- Messages Dropdown Menu -->
 
       <!-- Notifications Dropdown Menu -->
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">15</span>
-        </a>
+      {{-- <li class="nav-item dropdown">
+
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <span class="dropdown-item dropdown-header">{{ __('common.Notifications', ['total' => 15]) }}</span>
           <div class="dropdown-divider"></div>
@@ -51,12 +48,12 @@
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item dropdown-footer">{{ __('common.see_all') }}</a>
         </div>
-      </li>
-      <li class="nav-item">
+      </li> --}}
+      {{-- <li class="nav-item">
         <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
           <i class="fas fa-th-large"></i>
         </a>
-      </li>
+      </li> --}}
     </ul>
   </nav>
   <!-- /.navbar -->

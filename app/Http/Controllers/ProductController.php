@@ -46,28 +46,43 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(ProductStoreRequest $request)
-    {
-        $image_path = '';
+{
+    // Initialize a new Product instance
+    $product = new Product();
 
-        if ($request->hasFile('image')) {
-            $image_path = $request->file('image')->store('products', 'public');
-        }
+    // Handle image upload if present
+    if ($request->hasFile('image')) {
+        $file = $request->file('image');
+        $filename = time() . '.' . $file->getClientOriginalExtension();
 
-        $product = Product::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'image' => $image_path,
-            'barcode' => $request->barcode,
-            'price' => $request->price,
-            'quantity' => $request->quantity,
-            'status' => $request->status
-        ]);
+        // Move the uploaded file to the desired location
+        $file->move('uploads/products/', $filename);
 
-        if (!$product) {
-            return redirect()->back()->with('error', __('product.error_creating'));
-        }
-        return redirect()->route('products.index')->with('success', __('product.success_creating'));
+        // Set the image attribute of the product
+        $product->image = $filename;
     }
+
+    // Set other attributes from the request
+    $product->name = $request->input('name');
+    $product->description = $request->input('description');
+    $product->barcode = $request->input('barcode');
+    $product->price = $request->input('price');
+    $product->quantity = $request->input('quantity');
+    $product->status = $request->input('status');
+
+    // Save the product to the database
+    if (!$product->save()) {
+        // Handle failure to save
+        if (isset($filename)) {
+            // Delete the uploaded image if the product save fails
+            Storage::delete('uploads/products/' . $filename);
+        }
+        return redirect()->back()->with('error', __('product.error_creating'));
+    }
+
+    // Redirect with success message if save is successful
+    return redirect()->route('products.index')->with('success', __('product.success_creating'));
+}
 
     /**
      * Display the specified resource.

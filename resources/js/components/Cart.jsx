@@ -115,7 +115,7 @@ class Cart extends Component {
 
         axios
             .post('/admin/cart/change-qty', { product_id, quantity: qty })
-            .then((res) => {})
+            .then((res) => { })
             .catch((err) => {
                 Swal.fire('Error!', err.response.data.message, 'error');
             });
@@ -367,16 +367,17 @@ class Cart extends Component {
                                 key={p.id}
                                 className="item"
                             >
-                                <img src={p.image_url} alt="" />
+                                <img src={`/uploads/products/${p.image}`} alt={p.name} />
+
                                 <h5
                                     style={
                                         window.APP.warning_quantity >
-                                        p.quantity
+                                            p.quantity
                                             ? { color: 'red' }
                                             : {}
                                     }
                                 >
-                                    {p.name}({p.quantity})
+                                    <span style={{fontWeight:'bold',color:"red"}}>{p.name}</span><br></br>Qty ({p.quantity})
                                 </h5>
                             </div>
                         ))}
